@@ -1,11 +1,12 @@
 #include "TimerOne.h"
 
+// Global variables
 int start_voltage;
 
+
+// put your setup code here, to run once
 void setup() 
 {
-  // put your setup code here, to run once:  
-
   // Configure generator on pin 9
   // 5us = 200KHz
   pinMode(9, OUTPUT);
@@ -30,15 +31,14 @@ void setup()
 }
 
 
+// put your main code here, to run repeatedly
 void loop() 
 {
-  // put your main code here, to run repeatedly:
-
   int read_voltage = ReadVoltage();
   int difference = abs(read_voltage - start_voltage);
 
   // print it
-  if (difference > 0)
+  if (difference> 0)
   {
     Serial.print("start ");  
     Serial.print(start_voltage);
@@ -56,7 +56,7 @@ void loop()
   }
   else if (difference > 1)
   {
-    // mediu beep
+    // medium beep
     tone(3, 1000, 50);
     delay(100);    
   }  
@@ -68,15 +68,17 @@ void loop()
   }
 }
 
+
+// Read voltage from analog pin A0 and heavy average it
 int ReadVoltage()
 {
   long sum;
   sum = 0;
   
-  for (int i=0; i<100; i++)
+  for (int i=0; i<200; i++)
   {
     sum = sum + analogRead(A0);
   }
-  return sum / 100;
+  return sum / 200;
 }
 
